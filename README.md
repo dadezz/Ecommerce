@@ -38,4 +38,5 @@ Sono stati inseriti alcuni prodotti di esempio:
 * un annuncio con 5 foto 
 * un annuncio con tante recensioni
 * un annuncio con disponibilità 0 (quindi non visibile in homepage)
+
 l'unico account creato, per testare il funzionamento, ha nome utente "username" e password "password"
