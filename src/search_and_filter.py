@@ -120,4 +120,4 @@ def search_page():
 # semplice render_template
 @search_page_bp.route("/filter")
 def filter_query():
-    return render_template("Filters_Form_Template.html")
+    return render_template("filters_form_template.html")
