@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DASHBOARD - {{ user }}</title>
+    <style>
+        .container {
+            background-color: #ffffff;
+            padding: 30px 30px 30px 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 200%;
+            max-width: 600px;
+            margin: auto;
+        }
+        .container h1 {
+            margin-top: 0;
+            
+        }
+        .data-item {
+            margin-bottom: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    {% include 'header.html' %}
+    <div class="container">
+        <h1>Dashboard - {{ user }}</h1>
+
+        <div class="data-item"><strong>Email:</strong> {{ email }}</div>
+        > <a class="data-item" href="/Change_Mail">cambia email</a>
+        {% if telefono %}
+            <div class="data-item"><strong>numero di telefono:</strong> {{ telefono }}</div>
+        {% endif %}
+        {% if telefono %}
+            <div class="data-item"><strong>numero di telefono:</strong> {{ telefono }}</div>
+            > <a class="data-item" href="/Change_Phone">numero di telefono</a>
+        {% else %}
+            <p class="data-item"><strong>Telefono: </strong> </p>
+            > <a class="data-item" href="/Change_Phone">Inserisci un numero di telefono</a>
+        {% endif %}
+        <div class="data-item">
+            <div class="data-item"><strong>Carrello</strong></div>
+            > <a class="data-item" href="/carrello">Vai al carrello</a>
+        </div>
+        <div class="data-item">
+            <div class="data-item"><strong>Storico Acquisti</strong></div>
+            > <a class="data-item" href="/storico">Vai allo Storico Acquisti</a>
+         </div>
+        {% if venditore == false %}
+            <div class="data-item"></div>
+        <a class="data-item" id="add_role" href="/add_role"><strong>attiva ruolo venditore</strong></a>
+            <div class="data-item"></div>
+        {% endif %}
+
+        {% if venditore == true %}
+        <div class="data-item">
+            <div class="data-item"><strong>I miei annunci</strong></div>
+            > <a class="data-item" href="/My_sales">Vai agli annunci</a>
+        </div>
+
+        <div class="data-item">
+            <div class="data-item"><strong>Inserisci annuncio</strong></div>
+            > <a class="data-item" href={{ url_for('product.product_upload') }}>Inserisci annuncio</a>
+        </div>
+        {% endif %}
+
+        <div class="data-item">
+        <div class="data-item"><strong>Elimina account!!</strong></div>
+        <button id="delete">Clicca qui</button>
+        </div>
+
+        {% if venditore == False %}
+        <script>
+        document.getElementById("add_role").addEventListener("click", function (event){
+            event.preventDefault(); // Previene la navigazione automatica al link
+
+            var conferma = confirm("Procedere con l'attivazione dell'account alla modalità venditore?");
+            if (conferma) {
+                window.location.href = "/add_role"; // Naviga all'URL solo se confermato
+            } else {
+                alert("Hai annullato l'azione.");
+            }
+        });
+
+        </script>
+      {% endif %}
+
+        <script>
+        document.getElementById("delete").addEventListener("click", function () {
+            var conferma = confirm("Sei sicuro di voler procedere?");
+            if (conferma) {
+                window.location.href = "/deleteAccount";
+            } else {
+                alert("Hai annullato l'azione.");
+            }
+        });
+</script>
+
+</div>
+
+</body>
+</html>
+

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>PRODUCT LANDING PAGE</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #007bff;
+        }
+        .product-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        p {
+            line-height: 1.6;
+        }
+        .cta-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .remove-button {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .qta {
+            display: inline-block;
+            padding: 10px 15px;
+            width: 200px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .cta-button:hover {
+            background-color: #0056b3;
+        }
+        .details-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .details-table th,
+        .details-table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        .details-table th {
+            text-align: left;
+        }
+        .image-container {
+            width: 100%;
+            overflow-x: auto; /* Enable horizontal scrolling */
+            white-space: nowrap; /* Prevent line breaks */
+            margin-bottom: 20px;
+        }
+        .image-container img {
+            max-width: 100%;
+            max-height: 300px;
+            margin-right: 10px; /* Add space between images */
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    {% include '/header.html' %}
+    <div class="container">
+        {% if product %}
+        <h1>{{ product.Titolo }}</h1>
+        <div class="image-container">
+            {% for img_src in img %}
+            <img src="{{img_src}}" alt="Product Image">
+            {% endfor %}
+        </div>
+        <p> {{ product.Descrizione }} </p>
+        <p><strong>Price: {{ product.Prezzo }}</strong></p>
+            <form method="GET" action="/added" style="display:inline;" enctype="multipart/form-data">
+                <input type="text" name="qta" class="w3-bar-item qta" placeholder="quantità">
+                <input type="hidden" name="id" value="{{ product.id_prodotto }}">
+                <button type="submit" class="cta-button">aggiungi al carrello</button>
+            </form>
+
+        </br>
+        <a href="{{ url_for('reviews.review_upload', id=product.id_prodotto) }}">
+            Scrivi una recensione
+        </a>
+        <h2>Informazioni sul prodotto</h2>
+        <table class="details-table">
+            <tr>
+                <th>Metodi di pagamento accettati:</th>
+                <td>
+                    {% if product.visa == true %}
+                        carta
+                    {% endif %}
+                    {% if product.contanti == true %}
+                        contanti
+                    {% endif %}
+                    {% if product.baratto == true %}
+                        baratto
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>spedizione inclusa:</th>
+                {% if product.spedizione %}
+                    <td>si</td>
+                 {% else %}
+                    <td>no</td>
+                {% endif %}
+            </tr>
+            {% if place %}
+            <tr>
+                <th>dove</th>
+                <td>{{ product.Luogo }}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>Quantita disponibile:</th>
+                <td>{{ product.disponibilita }}</td>
+            </tr>
+            <tr>
+            </tr>
+                <th>Venditore</th>
+                <td>
+                    {{ product.autore }}
+                </td>
+            </tr>
+            <tr>
+                <th>Da pubblicazione annnuncio</th>
+                <td>{{ product.data_pubblicazione }}</td>
+            </tr>
+            <tr>
+                <th>Condizione d'utilizzo</th>
+                {% if product.nuovo == true %}
+                <td>nuovo</td>
+                {% else %}
+                <td>seconda mano</td>
+                {% endif %}
+            </tr>
+            <tr>
+                <th>Categoria di utilizzo del prodotto</th>
+                <td>{{ product.tag }}</td>
+            </tr>
+        </table>
+        <a href="/reviews/{{ product.id_prodotto }}">Vai alle Recensioni</a>
+        <div>
+            Questo prodotto è tuo?
+            <form method="GET" action="/ArticoloRimosso" style="display:inline;" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="{{ product.id_prodotto }}">
+                <button type="submit" class="remove-button">Rimuovi Annuncio</button>
+            </form>
+            <form method="GET" action="/Modifica" style="display:inline;" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="{{ product.id_prodotto }}">
+                <button type="submit" class="remove-button">Modifica Annuncio</button>
+            </form>
+        </div>
+        {% else %}
+        <h1> Error 404</h1>
+        <h2> Prodotto non trovato :(</h2>
+        {% endif %}
+    </div>
+</body>
+</html>

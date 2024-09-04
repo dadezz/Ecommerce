@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGO.COM</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-top: 0;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .product {
+            background-color: #e9e9e9; /* Slightly darker background */
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+        }
+        .product-image {
+            width: 150px; /* Set the width of the image */
+            flex: 0 0 auto; /* Ensure the image does not grow or shrink */
+            margin-right: 20px; /* Space between image and details */
+            border-radius: 8px; /* Rounded corners for the image */
+            overflow: hidden; /* Ensure the image doesn't overflow its container */
+        }
+        .product-image img {
+            width: 100%; /* Ensure the image takes up 100% of its container */
+            height: auto; /* Maintain aspect ratio */
+            display: block; /* Remove any extra space below the image */
+        }
+        .product-details {
+            flex: 1 1 auto;
+        }
+        .product-title {
+            font-weight: bold;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .product-title a {
+            text-decoration: none;
+            color: #333;
+        }
+        .product-description {
+            margin-bottom: 10px;
+        }
+        .product-price {
+            font-size: 18px;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="notification is-danger">
+                {{ messages[0] }}
+            </div>
+        {% endif %}
+    {% endwith %}
+    <div class="container">
+        <a href="/filter" class="w3-button w3-round-large login-button">FILTRA!!!</a>
+        <h1>Product List</h1>
+        {% if products %}
+        <ul>
+            {% for product, img in zip(products, img_src) %}
+            <li class="product">
+                <div class="product-image">
+                    <img src="{{ img }}" alt="Product">
+                </div>
+                <div class="product-details">
+                    <div class="product-title"><a href="/{{product.id_prodotto}}">{{product.Titolo}}</a></div>
+                    <div class="product-description">{{product.Descrizione}}</div>
+                    <div class="product-price">${{product.Prezzo}}</div>
+
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>Sorry, there are no products matching the selected search filters</p>
+    </div>
+    {% endif %}
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CHANGE MAIL</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+</head>
+<body>
+{% include "header.html" %}
+<div class="container">
+    <form action="/Change_Mail" method="post">
+        <h1>Cambia mail:</h1>
+
+        <div class="container">La tua vecchia mail: {{ vecchia_mail }}</div>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="notification is-danger">
+                    {{ messages[0] }}. Go to <a href="{{ url_for('user_manager.login_page') }}">login_page</a>.
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <label for="email1">Email nuova:</label>
+        <input type="text" id="mail1" name="mail1" required>
+        <label for="email2">Ripeti:</label>
+        <input type="text" id="mail2" name="mail2" required>
+        <input type="submit" value="Cambia">
+    </form>
+</div>
+</body>
+</html>

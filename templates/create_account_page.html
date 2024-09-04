@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       <title>SIGN IN</title>
+       
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style> 
+    
+    </head>
+    <body>
+        <div class="container">
+        <form action="/sign_in" method="post">
+            <h1>Registrazione</h1>
+
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="notification is-danger">
+                    {{ messages[0] }}. Go to <a href="{{ url_for('user_manager.login_page') }}">login_page</a>.
+                </div>
+            {% endif %}
+            {% endwith %}
+
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" required>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Inserisci la password:</label>
+            <input type="password" id="password" name="password1" required>
+
+            <label for="password">Conferma la Password:</label>
+            <input type="password" id="password" name="password2" required>
+
+            <label for="user_type">Tipo di Utente:</label>
+            <select id="user_type" name="vendor">
+                <option value="no">Cliente</option>
+                <option value="yes">Venditore</option>
+            </select>
+
+            <input type="submit" value="Registrati">
+        </form>
+    </div>
+    </body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUBLISH CONTENT</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="text"],
+        textarea,
+        input[type="file"],
+        select,
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        .checkbox-group,
+        .radio-group {
+            margin-bottom: 20px;
+        }
+        .flex-container {
+            display: flex;
+            align-items: flex-start; /* Align items to the start */
+            gap: 20px;
+        }
+        .flex-item {
+            flex: 1;
+        }
+        .radio-group, .condition-group, .price-group {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Align items to the start */
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+{% include 'header.html' %}
+<div class="container">
+    <h1>Publish Content</h1>
+    <form action="{{ url_for('product.product_upload') }}" method="post" enctype="multipart/form-data">
+        <label for="Titolo">Titolo:</label>
+        <input type="text" id="Titolo" name="Titolo" required>
+
+        <label for="Descrizione">Descrizione:</label>
+        <textarea id="Descrizione" name="Descrizione" rows="6" required></textarea>
+
+        <label for="Tag">Categoria:</label>
+        <div class="checkbox-group">
+            <select id="Tag" name="Tag">
+                <option value="altro">Altro</option>
+                <option value="motori">Automobili e veicoli</option>
+                <option value="motori2">Accessori auto</option>
+                <option value="elettronica">Dispositivi elettronici</option>
+                <option value="elettronica2">Accessori per l'elettronica</option>
+                <option value="casa">Immobili</option>
+                <option value="casa2">Arredamento</option>
+                <option value="casa3">Elettrodomestici</option>
+                <option value="casa4">Cura casa</option>
+                <option value="persona">Vestiario</option>
+                <option value="persona2">Accessori e gioielli</option>
+                <option value="sport">Sports e Hobbies</option>
+                <option value="libri">Libri</option>
+                <option value="bici">Biciclette</option>
+                <option value="collezionismo">Collezionismo</option>
+            </select>
+        </div>
+        <label for="immagini">Inserisci massimo 5 immagini del prodotto</label>
+        <input type="file" id="immagini" name="images[]" multiple accept="image/*">
+
+        <div class="checkbox-group">
+            <label>Metodi di pagamento:</label>
+            <label><input type="checkbox" name="payment_methods" value="visa"> Carta di credito</label>
+            <label><input type="checkbox" name="payment_methods" value="cash"> Contanti</label>
+            <label><input type="checkbox" name="payment_methods" value="barter"> Baratto (consigliato)</label>
+        </div>
+
+        <div class="flex-container">
+            <div class="flex-item radio-group">
+                <label>Spedizione:</label>
+                <label><input type="radio" name="shipment" value="yes" required> Si</label>
+                <label><input type="radio" name="shipment" value="no"> No</label>
+            </div>
+
+            <div class="flex-item condition-group">
+                <label for="condition">Condizione:</label>
+                <select id="condition" name="condition" required>
+                    <option value="new">Nuovo</option>
+                    <option value="second_hand">Usato</option>
+                </select>
+            </div>
+
+            <div class="flex-item price-group">
+                <label for="prezzo">Prezzo:</label>
+                <input type="number" id="prezzo" name="prezzo" required step="0.01" min="0" required>
+            </div>
+        </div>
+
+        <label for="luogo">Luogo:</label>
+        <input type="text" id="luogo" name="luogo">
+
+        <label for="quantita">Quantità disponibile:</label>
+        <input type="number" id="quantita" name="quantita" required>
+
+        <input type="submit" value="Pubblica">
+    </form>
+</div>
+</body>
+</html>

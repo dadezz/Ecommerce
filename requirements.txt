@@ -1,0 +1,6 @@
+Flask
+Flask-Login
+Werkzeug
+SQLAlchemy
+numpy
+psycopg2-binary
